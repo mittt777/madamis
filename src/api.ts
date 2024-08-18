@@ -1,13 +1,12 @@
-import { PrismaD1 } from "@prisma/adapter-d1";
-import { PrismaClient } from "@prisma/client";
+import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
+import { users } from "../schema";
 
 export const api = new Hono<{ Bindings: Env }>();
 
 api.get("users/", async (c) => {
-  const adapter = new PrismaD1(c.env.DB);
-  const prisma = new PrismaClient({ adapter });
+  const db = drizzle(c.env.DB);
 
-  const users = await prisma.users.findMany();
-  return c.json(users);
+  const result = await db.select().from(users).all();
+  return c.json(result);
 });
