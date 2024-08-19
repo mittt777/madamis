@@ -4,9 +4,7 @@ import { MoonStars, Sun } from "@phosphor-icons/react";
 export const Header = () => {
   return (
     <Group bg="green" justify="space-between" p="md">
-      <Title fw="normal" c="white">
-        J∞マダミス部
-      </Title>
+      <Title c="white">J∞マダミス部</Title>
       <ColorModeToggle />
     </Group>
   );

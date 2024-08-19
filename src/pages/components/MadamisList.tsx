@@ -35,14 +35,10 @@ export const MadamisList = () => {
                   />
                 </Group>
                 <Group>
-                  <Badge
-                    size="xl"
-                    color={d.gmRequired ? "orange" : "cyan"}
-                    fw="normal"
-                  >
+                  <Badge size="xl" color={d.gmRequired ? "orange" : "cyan"}>
                     GM: {d.gmRequired ? "要" : "レス可"}
                   </Badge>
-                  <Badge size="xl" color="violet" fw="normal">
+                  <Badge size="xl" color="violet">
                     PL: {d.player}人
                   </Badge>
                   <ActionIcon size="lg" radius="xl" variant="light">
