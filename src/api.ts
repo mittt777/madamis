@@ -1,12 +1,9 @@
-import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
-import { users } from "../schema";
+import { userApp } from "./apis/user";
+import { madamisApp } from "./apis/madamis";
 
 export const api = new Hono<{ Bindings: Env }>();
 
-api.get("users/", async (c) => {
-  const db = drizzle(c.env.DB);
+const app = api.route("/user", userApp).route("/madamis", madamisApp);
 
-  const result = await db.select().from(users).all();
-  return c.json(result);
-});
+export type AppType = typeof app;
