@@ -20,6 +20,7 @@ app.route("/api", api).get("*", (c) => {
           ></link>
           {import.meta.env.PROD ? (
             <>
+              <link rel="stylesheet" href="/static/assets/client.css" />
               <script type="module" src="/static/client.js"></script>
             </>
           ) : (
