@@ -51,7 +51,17 @@ export const GameModal = () => {
   const defaultPlayers = useMemo(
     () =>
       editData?.gameUsers
-        .filter((u) => (!madamis?.gmRequired ? u : !u.gm))
+        .filter((u) => {
+          if (!madamis?.gmRequired) {
+            if (madamis?.player === editData.gameUsers.length) {
+              return true;
+            } else {
+              return !u.gm;
+            }
+          } else {
+            return !u.gm;
+          }
+        })
         .map((u) => u.id.toString()) ?? [],
     [madamis, editData]
   );
