@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Badge,
+  Button,
   Card,
   Chip,
   Group,
@@ -131,7 +132,11 @@ export const MadamisList = () => {
                       ))}
                     </Stack>
                   )}
-                  {Boolean(d.bought) && <AddGameButton madamisId={d.id} />}
+                  {Boolean(d.bought) ? (
+                    <AddGameButton madamisId={d.id} />
+                  ) : (
+                    <Button disabled>未購入</Button>
+                  )}
                 </Stack>
               </Card>
             ))}
