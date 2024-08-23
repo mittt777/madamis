@@ -1,9 +1,9 @@
 import { drizzle } from "drizzle-orm/d1";
 import { Hono } from "hono";
-import { games, gameUsers, madamis } from "../../schema";
+import { games, gameUsers } from "../../schema";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 
 const gamesPostSchema = z.object({
   madamisId: z.number().int(),

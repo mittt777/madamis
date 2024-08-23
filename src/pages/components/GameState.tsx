@@ -9,19 +9,24 @@ import {
 import { PencilSimple } from "@phosphor-icons/react";
 import { useGameModalStore } from "../stores/gameModalStore";
 
+// 型を定義から取りたいが.. https://github.com/drizzle-team/drizzle-orm/discussions/1483
 export const GameState = ({
-  madamisId,
   game,
 }: {
-  madamisId: number;
   game: {
     id: number;
+    madamisId: number;
     date: string;
     gameUsers: ReadonlyArray<{
       id: number;
-      gm: boolean;
-      name: string;
-      color: string;
+      gm: number;
+      gameId: number;
+      userId: number;
+      user: {
+        id: number;
+        name: string;
+        color: string;
+      };
     }>;
   };
 }) => {
@@ -45,7 +50,7 @@ export const GameState = ({
             variant="light"
             radius="xl"
             onClick={() => {
-              editOpen(madamisId, game.id);
+              editOpen(game.madamisId, game.id);
             }}
           >
             <PencilSimple />
@@ -59,9 +64,9 @@ export const GameState = ({
                 u.gm ? "orange" : colorScheme === "dark" ? "gray" : "gray.1"
               }
               size="sm"
-              c={u.gm ? "white" : u.color}
+              c={u.gm ? "white" : u.user.color}
             >
-              {u.name}
+              {u.user.name}
             </Badge>
           ))}
         </Group>

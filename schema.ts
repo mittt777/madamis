@@ -23,7 +23,11 @@ export const games = sqliteTable("Games", {
     .notNull(),
 });
 
-export const gamesRelations = relations(games, ({ many }) => ({
+export const gamesRelations = relations(games, ({ one, many }) => ({
+  madamis: one(madamis, {
+    fields: [games.madamisId],
+    references: [madamis.id],
+  }),
   gameUsers: many(gameUsers),
 }));
 
@@ -48,3 +52,14 @@ export const gameUsers = sqliteTable("GameUsers", {
     .references(() => users.id)
     .notNull(),
 });
+
+export const usersToGamesRelations = relations(gameUsers, ({ one }) => ({
+  game: one(games, {
+    fields: [gameUsers.gameId],
+    references: [games.id],
+  }),
+  user: one(users, {
+    fields: [gameUsers.userId],
+    references: [users.id],
+  }),
+}));
