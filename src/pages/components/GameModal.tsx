@@ -62,16 +62,18 @@ export const GameModal = () => {
             return !u.gm;
           }
         })
-        .map((u) => u.id.toString()) ?? [],
+        .map((u) => u.user.id.toString()) ?? [],
     [madamis, editData]
   );
   const playersToRemove = useMemo(
     () =>
       madamis?.games
         .filter((g) => (gameId ? g.id !== gameId : true))
-        .flatMap((g) => g.gameUsers.map((u) => u.id.toString())),
+        .flatMap((g) => g.gameUsers.map((u) => u.user.id.toString())),
     [madamis, gameId]
   );
+
+  console.log(playersToRemove);
 
   const formSchema = z.object({
     players: z.array(z.string()).length(madamis?.player ?? 0),

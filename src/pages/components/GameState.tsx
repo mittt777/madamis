@@ -59,7 +59,7 @@ export const GameState = ({
         <Group gap="xs" justify="center">
           {game.gameUsers.map((u) => (
             <Badge
-              key={u.id}
+              key={u.user.id}
               color={
                 u.gm ? "orange" : colorScheme === "dark" ? "gray" : "gray.1"
               }
