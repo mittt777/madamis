@@ -73,8 +73,6 @@ export const GameModal = () => {
     [madamis, gameId]
   );
 
-  console.log(playersToRemove);
-
   const formSchema = z.object({
     players: z.array(z.string()).length(madamis?.player ?? 0),
     gm: z.string().refine((v) => userIds.includes(v)),
