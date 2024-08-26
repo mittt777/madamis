@@ -43,6 +43,13 @@
       "when": 1724302449155,
       "tag": "0005_cheerful_supernaut",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1724652126296,
+      "tag": "0006_lush_the_renegades",
+      "breakpoints": true
     }
   ]
 }
