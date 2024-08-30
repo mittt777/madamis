@@ -16,12 +16,15 @@ import { AddGameButton } from "./AddGamesButton";
 import { GameState } from "./GameState";
 import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
+import { useUser } from "../hooks/useUser";
 
 export const MadamisList = () => {
-  const { data } = useMadamisList();
+  const { data: madamis } = useMadamisList();
+  const { data: users } = useUser();
   const { editOpen } = useMadamisModalStore();
 
   const [onlyNotPlayed, updatePlayed] = useState(false);
+  const [onlyPlayable, updatePlayable] = useState(false);
   const [players, setPlayers] = useState<string | null>(null);
 
   return (
@@ -35,6 +38,15 @@ export const MadamisList = () => {
           }}
         >
           未プレイのみ
+        </Chip>
+        <Chip
+          size="xl"
+          checked={onlyPlayable}
+          onChange={(e) => {
+            updatePlayable(e);
+          }}
+        >
+          プレイ可能のみ
         </Chip>
         <Select
           placeholder="遊ぶ人数"
@@ -72,9 +84,16 @@ export const MadamisList = () => {
         />
       </Group>
       <Group justify="center">
-        {data &&
-          data
+        {madamis &&
+          users &&
+          madamis
             .filter((d) => (onlyNotPlayed ? d.games.length === 0 : true))
+            .filter((d) =>
+              onlyPlayable
+                ? d.bought &&
+                  users.length - d.games.length * d.player > d.player
+                : true
+            )
             .filter((d) =>
               !players
                 ? true
@@ -127,7 +146,7 @@ export const MadamisList = () => {
                     <Stack>
                       {d.games.map((g) => (
                         <Fragment key={g.id}>
-                          <GameState game={g} madamisId={d.id} />
+                          <GameState game={g} />
                         </Fragment>
                       ))}
                     </Stack>

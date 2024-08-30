@@ -18,7 +18,6 @@ export const GameState = ({
     madamisId: number;
     date: string;
     gameUsers: ReadonlyArray<{
-      id: number;
       gm: number;
       gameId: number;
       userId: number;
