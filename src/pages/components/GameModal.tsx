@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Badge,
   Button,
@@ -10,17 +11,16 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
+import { hc } from "hono/client";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { hc } from "hono/client";
-import { useGameModalStore } from "../stores/gameModalStore";
-import { useEffect, useMemo, useState } from "react";
-import { AppType } from "../../api";
-import { useUser } from "../hooks/useUser";
+import type { AppType } from "../../api";
 import { useMadamisList } from "../hooks/useMadamisList";
-import { DateInput } from "@mantine/dates";
+import { useUser } from "../hooks/useUser";
+import { useGameModalStore } from "../stores/gameModalStore";
 
 const client = hc<AppType>("/api");
 
@@ -33,11 +33,11 @@ export const GameModal = () => {
 
   const madamis = useMemo(
     () => madamisList?.find((m) => m.id === madamisId),
-    [madamisList, madamisId]
+    [madamisList, madamisId],
   );
   const userIds = useMemo(
     () => (users ? users.map((u) => u.id.toString()) : []),
-    [users]
+    [users],
   );
   const editData = useMemo(
     () =>
@@ -46,7 +46,7 @@ export const GameModal = () => {
             ?.find((m) => m.games.find((g) => g.id === gameId))
             ?.games.find((g) => g.id === gameId)
         : undefined,
-    [gameId, madamisList]
+    [gameId, madamisList],
   );
   const defaultPlayers = useMemo(
     () =>
@@ -55,22 +55,20 @@ export const GameModal = () => {
           if (!madamis?.gmRequired) {
             if (madamis?.player === editData.gameUsers.length) {
               return true;
-            } else {
-              return !u.gm;
             }
-          } else {
             return !u.gm;
           }
+          return !u.gm;
         })
         .map((u) => u.user.id.toString()) ?? [],
-    [madamis, editData]
+    [madamis, editData],
   );
   const playersToRemove = useMemo(
     () =>
       madamis?.games
         .filter((g) => (gameId ? g.id !== gameId : true))
         .flatMap((g) => g.gameUsers.map((u) => u.user.id.toString())),
-    [madamis, gameId]
+    [madamis, gameId],
   );
 
   const formSchema = z.object({
@@ -97,8 +95,8 @@ export const GameModal = () => {
     const reqObj = {
       madamisId: madamisId!,
       date: data.date.toISOString(),
-      gm: parseInt(data.gm),
-      players: data.players.map((p) => parseInt(p)),
+      gm: Number.parseInt(data.gm),
+      players: data.players.map((p) => Number.parseInt(p)),
     };
     if (gameId) {
       await client.games.$put({
@@ -115,6 +113,7 @@ export const GameModal = () => {
     setLoading(false);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     reset();
     if (editData) {
@@ -158,9 +157,7 @@ export const GameModal = () => {
                     label: u.name,
                     value: u.id.toString(),
                   }))}
-                  defaultValue={editData?.gameUsers
-                    .find((u) => u.gm)
-                    ?.id.toString()}
+                  defaultValue={editData?.gameUsers.find((u) => u.gm)?.user.id}
                   {...register("gm")}
                   error={errors.gm?.message}
                 />
@@ -180,8 +177,8 @@ export const GameModal = () => {
                             !playersToRemove?.includes(u.id.toString()) &&
                             !(
                               madamis.gmRequired &&
-                              u.id === parseInt(watch("gm"))
-                            )
+                              u.id === Number.parseInt(watch("gm"))
+                            ),
                         )
                         .map((u) => (
                           <Chip value={u.id.toString()} key={u.id} color="teal">

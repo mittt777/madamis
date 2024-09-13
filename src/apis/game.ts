@@ -77,7 +77,7 @@ export const gamesApp = gamesApi
     const db = drizzle(c.env.DB);
     const id = c.req.param("id");
 
-    await db.delete(gameUsers).where(eq(gameUsers.gameId, parseInt(id)));
-    await db.delete(games).where(eq(games.id, parseInt(id)));
+    await db.delete(gameUsers).where(eq(gameUsers.gameId, Number.parseInt(id)));
+    await db.delete(games).where(eq(games.id, Number.parseInt(id)));
     return new Response(null, { status: 204 });
   });

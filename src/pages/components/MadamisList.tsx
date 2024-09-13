@@ -10,13 +10,13 @@ import {
   Stack,
 } from "@mantine/core";
 import { Link, PencilSimple } from "@phosphor-icons/react";
+import { useState } from "react";
+import { Fragment } from "react/jsx-runtime";
 import { useMadamisList } from "../hooks/useMadamisList";
+import { useUser } from "../hooks/useUser";
 import { useMadamisModalStore } from "../stores/madamisModalStore";
 import { AddGameButton } from "./AddGamesButton";
 import { GameState } from "./GameState";
-import { Fragment } from "react/jsx-runtime";
-import { useState } from "react";
-import { useUser } from "../hooks/useUser";
 
 export const MadamisList = () => {
   const { data: madamis } = useMadamisList();
@@ -92,13 +92,13 @@ export const MadamisList = () => {
               onlyPlayable
                 ? d.bought &&
                   users.length - d.games.length * d.player > d.player
-                : true
+                : true,
             )
             .filter((d) =>
               !players
                 ? true
-                : d.player + 1 === parseInt(players) ||
-                  (!d.gmRequired && d.player === parseInt(players))
+                : d.player + 1 === Number.parseInt(players) ||
+                  (!d.gmRequired && d.player === Number.parseInt(players)),
             )
             .map((d) => (
               <Card
@@ -151,7 +151,7 @@ export const MadamisList = () => {
                       ))}
                     </Stack>
                   )}
-                  {Boolean(d.bought) ? (
+                  {d.bought ? (
                     <AddGameButton madamisId={d.id} />
                   ) : (
                     <Button disabled>未購入</Button>

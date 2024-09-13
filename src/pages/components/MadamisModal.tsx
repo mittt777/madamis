@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   Checkbox,
@@ -9,14 +10,13 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { hc } from "hono/client";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { hc } from "hono/client";
+import type { AppType } from "../../api";
 import { useMadamisList } from "../hooks/useMadamisList";
 import { useMadamisModalStore } from "../stores/madamisModalStore";
-import { useEffect, useState } from "react";
-import { AppType } from "../../api";
 
 const client = hc<AppType>("/api");
 
@@ -43,7 +43,7 @@ export const MadamisModal = () => {
             .includes(v),
         {
           message: "Already exists",
-        }
+        },
       ),
     player: z.coerce.number().int().min(1).max(6),
     gmRequired: z.boolean(),
@@ -77,6 +77,7 @@ export const MadamisModal = () => {
     setLoading(false);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     reset();
   }, [madamisId, open]);

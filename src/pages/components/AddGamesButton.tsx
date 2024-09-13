@@ -10,7 +10,7 @@ export const AddGameButton = ({ madamisId }: { madamisId: number }) => {
 
   const madamis = madamisList?.find((m) => m.id === madamisId);
   const playedPlayers = Array.from(
-    new Set(madamis?.games.flatMap((g) => g.gameUsers.map((u) => u.user.id)))
+    new Set(madamis?.games.flatMap((g) => g.gameUsers.map((u) => u.user.id))),
   ).length;
 
   return (

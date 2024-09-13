@@ -23,5 +23,5 @@ export const useGameModalStore = create<GameModalState & GameModalAction>(
       set(() => ({ open: true, madamisId: madamisId, gameId: gameId })),
     close: () =>
       set(() => ({ open: false, madamisId: undefined, gameId: undefined })),
-  })
+  }),
 );

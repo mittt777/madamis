@@ -59,6 +59,6 @@ export const madamisApp = madamisApi
     const db = drizzle(c.env.DB);
     const id = c.req.param("id");
 
-    await db.delete(madamis).where(eq(madamis.id, parseInt(id)));
+    await db.delete(madamis).where(eq(madamis.id, Number.parseInt(id)));
     return new Response(null, { status: 204 });
   });
