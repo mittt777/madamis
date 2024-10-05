@@ -5,11 +5,11 @@ import type { AppType } from "../../api";
 const client = hc<AppType>;
 
 export const useMadamisList = () => {
-  const { data, mutate } = useSWR("/api/madamis", (path) =>
+  const { data, mutate, isLoading } = useSWR("/api/madamis", (path) =>
     client("/api")
       .madamis.$get()
       .then((res) => res.json()),
   );
 
-  return { data, mutate };
+  return { data, mutate, isLoading };
 };

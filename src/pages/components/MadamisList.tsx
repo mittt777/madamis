@@ -5,6 +5,7 @@ import {
   Card,
   Chip,
   Group,
+  Loader,
   NavLink,
   Select,
   Stack,
@@ -19,13 +20,21 @@ import { AddGameButton } from "./AddGamesButton";
 import { GameState } from "./GameState";
 
 export const MadamisList = () => {
-  const { data: madamis } = useMadamisList();
+  const { data: madamis, isLoading } = useMadamisList();
   const { data: users } = useUser();
   const { editOpen } = useMadamisModalStore();
 
   const [onlyNotPlayed, updatePlayed] = useState(false);
   const [onlyPlayable, updatePlayable] = useState(false);
   const [players, setPlayers] = useState<string | null>(null);
+
+  if (isLoading) {
+    return (
+      <Group p="sm" justify="center">
+        <Loader size="xl" />
+      </Group>
+    );
+  }
 
   return (
     <Stack p="sm" align="center">
