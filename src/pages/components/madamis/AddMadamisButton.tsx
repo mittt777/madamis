@@ -1,6 +1,6 @@
 import { ActionIcon, Box } from "@mantine/core";
 import { Plus } from "@phosphor-icons/react";
-import { useMadamisModalStore } from "../stores/madamisModalStore";
+import { useMadamisModalStore } from "../../stores/madamisModalStore";
 
 export const AddMadamisButton = () => {
   const { createOpen } = useMadamisModalStore();

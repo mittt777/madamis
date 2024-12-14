@@ -13,11 +13,15 @@ import {
 import { Link, PencilSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 import { Fragment } from "react/jsx-runtime";
-import { useMadamisList } from "../hooks/useMadamisList";
-import { useUser } from "../hooks/useUser";
-import { useMadamisModalStore } from "../stores/madamisModalStore";
-import { AddGameButton } from "./AddGamesButton";
-import { GameState } from "./GameState";
+import {
+  gmRequired,
+  gmRequiredBadgeColor,
+} from "../../../constants/gmRequired";
+import { useMadamisList } from "../../hooks/useMadamisList";
+import { useUser } from "../../hooks/useUser";
+import { useMadamisModalStore } from "../../stores/madamisModalStore";
+import { AddGameButton } from "./../games/AddGamesButton";
+import { GameState } from "./../games/GameState";
 
 export const MadamisList = () => {
   const { data: madamis, isLoading } = useMadamisList();
@@ -131,8 +135,8 @@ export const MadamisList = () => {
                     }}
                   />
                   <Group>
-                    <Badge size="xl" color={d.gmRequired ? "orange" : "cyan"}>
-                      GM: {d.gmRequired ? "要" : "レス可"}
+                    <Badge size="xl" color={gmRequiredBadgeColor[d.gmRequired]}>
+                      {gmRequired[d.gmRequired]}
                     </Badge>
                     <Badge size="xl" color="violet">
                       PL: {d.player}人

@@ -12,7 +12,7 @@ export const madamis = sqliteTable("Madamis", {
   title: text("title").notNull(),
   link: text("link").notNull().unique(),
   player: integer("player").notNull(), // プレイヤー人数
-  gmRequired: integer("gmRequired").notNull(), // GM必須シナリオか否か
+  gmRequired: integer("gmRequired").notNull(), // GM必須シナリオか否か(0: Both, 1: required, 2: unnecessary)
   bought: integer("bought").notNull(), // 買ったか否か
 });
 
@@ -71,7 +71,7 @@ export const gameUsers = sqliteTable(
         columns: [table.gameId, table.userId],
       }),
     };
-  }
+  },
 );
 
 export const usersToGamesRelations = relations(gameUsers, ({ one }) => ({

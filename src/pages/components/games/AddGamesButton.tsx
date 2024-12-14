@@ -1,7 +1,7 @@
 import { Button } from "@mantine/core";
-import { useGameModalStore } from "../stores/gameModalStore";
-import { useMadamisList } from "../hooks/useMadamisList";
-import { useUser } from "../hooks/useUser";
+import { useMadamisList } from "../../hooks/useMadamisList";
+import { useUser } from "../../hooks/useUser";
+import { useGameModalStore } from "../../stores/gameModalStore";
 
 export const AddGameButton = ({ madamisId }: { madamisId: number }) => {
   const { data: madamisList } = useMadamisList();
@@ -17,7 +17,7 @@ export const AddGameButton = ({ madamisId }: { madamisId: number }) => {
     <>
       {madamis &&
       users &&
-      users.length - playedPlayers + (madamis.gmRequired ? 0 : 1) >
+      users.length - playedPlayers + (madamis.gmRequired === 1 ? 0 : 1) >
         madamis.player ? (
         <Button
           variant="light"

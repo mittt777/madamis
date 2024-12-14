@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
     "ignoreUnknown": true
   },
@@ -12,6 +12,9 @@
     "rules": {
       "style": {
         "noNonNullAssertion": "warn"
+      },
+      "correctness": {
+        "noUnusedImports": "warn"
       }
     },
     "ignore": ["./src/index.tsx"]

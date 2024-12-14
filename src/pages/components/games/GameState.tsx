@@ -7,7 +7,7 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { PencilSimple } from "@phosphor-icons/react";
-import { useGameModalStore } from "../stores/gameModalStore";
+import { useGameModalStore } from "../../stores/gameModalStore";
 
 // 型を定義から取りたいが.. https://github.com/drizzle-team/drizzle-orm/discussions/1483
 export const GameState = ({

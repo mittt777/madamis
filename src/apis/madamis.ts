@@ -11,11 +11,11 @@ const madamisPostSchema = z.object({
   title: z.string().min(1),
   link: z.string().url(),
   player: z.number().int().min(1).max(6),
-  gmRequired: z.boolean().transform((b) => Number(b)),
+  gmRequired: z.number().nonnegative().max(2),
   bought: z.boolean().transform((b) => Number(b)),
 });
 
-const madamisPutSchema = madamisPostSchema.extend({
+export const madamisPutSchema = madamisPostSchema.extend({
   id: z.number().int(),
 });
 
