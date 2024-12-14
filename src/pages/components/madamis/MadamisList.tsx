@@ -110,8 +110,12 @@ export const MadamisList = () => {
             .filter((d) =>
               !players
                 ? true
-                : d.player + 1 === Number.parseInt(players) ||
-                  (!d.gmRequired && d.player === Number.parseInt(players)),
+                : d.gmRequired !== 2
+                  ? d.gmRequired === 1
+                    ? d.player + 1 === Number.parseInt(players)
+                    : d.player + 1 === Number.parseInt(players) ||
+                      d.player === Number.parseInt(players)
+                  : d.player === Number.parseInt(players),
             )
             .map((d) => (
               <Card
