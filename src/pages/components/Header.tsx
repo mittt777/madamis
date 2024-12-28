@@ -22,7 +22,7 @@ export const Header = () => {
       p="md"
       top="0"
       pos="sticky"
-      zIndex="1"
+      zIndex="2"
       shadow="md"
     >
       <Button
