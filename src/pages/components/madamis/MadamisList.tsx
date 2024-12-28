@@ -104,13 +104,16 @@ const MadamisCard: FC<{
       gridRow="span 4"
     >
       <Button
-        variant="subtle"
+        variant="surface"
         colorScheme="lime"
-        textAlign="start"
+        textWrap="wrap"
+        minH="3rem"
+        h="full"
+        lineHeight="2"
         as="a"
         href={madamis.link}
         target="_blank"
-        startIcon={<Link />}
+        startIcon={<Link weight="bold" fontSize="1.2rem" />}
       >
         {madamis.title}
       </Button>
