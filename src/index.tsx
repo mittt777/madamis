@@ -12,6 +12,11 @@ app.route("/api", api).get("*", (c) => {
           <meta charSet="utf-8" />
           <meta content="width=device-width, initial-scale=1" name="viewport" />
           <title>j∞マダミス部</title>
+          <link
+            rel="shortcut icon"
+            href="/static/icon.svg"
+            type="image/svg+xml"
+          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
@@ -20,7 +25,6 @@ app.route("/api", api).get("*", (c) => {
           ></link>
           {import.meta.env.PROD ? (
             <>
-              <link rel="stylesheet" href="/static/assets/client.css" />
               <script type="module" src="/static/client.js"></script>
             </>
           ) : (
