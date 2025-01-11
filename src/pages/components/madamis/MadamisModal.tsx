@@ -13,7 +13,7 @@ import {
 } from "@yamada-ui/react";
 import { type InferResponseType, hc } from "hono/client";
 import type { FC } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import type { AppType } from "../../../api";
 import { gmRequired } from "../../../constants/gmRequired";
@@ -76,8 +76,7 @@ const MadamisForm: FC<{
 
   const {
     register,
-    setValue,
-    watch,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormSchema>({
@@ -102,7 +101,7 @@ const MadamisForm: FC<{
       });
     }
     await mutate();
-    onClose();
+    onClose(); // FIXME: 閉じたときにスクロールが戻らない
   };
 
   return (
@@ -138,16 +137,22 @@ const MadamisForm: FC<{
           {...register("player")}
         />
       </Fieldset>
-      <SegmentedControl
-        colorScheme="yellow"
-        value={String(watch("gmRequired") ?? 0)}
-        onChange={(e) => {
-          setValue("gmRequired", Number(e));
-        }}
-        items={gmRequired.map((g, i) => ({
-          label: g,
-          value: i.toString(),
-        }))}
+      <Controller
+        control={control}
+        name="gmRequired"
+        render={({ field }) => (
+          <SegmentedControl
+            colorScheme="yellow"
+            value={String(field.value)}
+            onChange={(e) => {
+              field.onChange(Number(e));
+            }}
+            items={gmRequired.map((g, i) => ({
+              label: g,
+              value: i.toString(),
+            }))}
+          />
+        )}
       />
       <Checkbox label="購入済み/無料" size="lg" {...register("bought")} />
       <Button type="submit" colorScheme="lime" loading={isSubmitting}>
